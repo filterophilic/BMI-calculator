@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI calculator</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div>
+        <h2>BMI Calculator</h2>
+        <p class="text">Height</p>
+        <input type="text" name="" id="height">
+        <p class="text">Weight</p>
+        <input type="text" name="" id="weight">
+        <p id="result"></p>
+        <button id="btn" onClick="bmi()">Calculate</button>
+        <p id="info">Please enter height [cm] and weight [kg] </p>
+    </div>
+
+    <script>
+        function bmi() {
+            var h = document.getElementById('height').value;
+            var w = document.getElementById('weight').value;
+            var bmi = w / (h /100 * h /100);
+            var total = bmi.toFixed(2);
+            document.getElementById('result').innerHTML = "Your BMI is " + total;
+        }
+    </script> 
+    <footer class="footer">
+        <p class="copyright aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">© <span class="year">2023</span>  -  Raza<span class="bold"> Fitness</span></p>
+    </footer>
+</body>
+</html>
