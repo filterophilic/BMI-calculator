@@ -1,19 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BMI calculator</title>
     <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
 </head>
+
 <body>
-    <div>
+    <div class="circles">
+        <div class="circle9"></div>
+        <div class="circle10"></div>
+        <div class="circle11"></div>
+        <div class="circle12"></div>
+        <div class="circle13"></div>
+        <div class="circle14"></div>
+        <div class="circle15"></div>
+    </div>
+    <script>
+        window.addEventListener("load", function () {
+            document.querySelector(".circles").style.display = "none";
+            document.querySelector(".page-content").style.display = "block";
+        });
+    </script>
+    <div class="page-content">
         <h2>BMI Calculator</h2>
         <p class="text">Height</p>
-        <input type="text" name="" id="height">
+        <input type="text" oninput="this.value=this.value.replace(/[^0-9\.]/g,'').replace(/(\..*)\./g, '$1');" name=""
+            id="height">
         <p class="text">Weight</p>
-        <input type="text" name="" id="weight">
+        <input type="text" oninput="this.value=this.value.replace(/[^0-9\.]/g,'').replace(/(\..*)\./g, '$1');" name=""
+            id="weight">
         <p id="result"></p>
         <button id="btn" onClick="bmi()">Calculate</button>
         <p id="info">Please enter height [cm] and weight [kg] </p>
@@ -23,13 +43,73 @@
         function bmi() {
             var h = document.getElementById('height').value;
             var w = document.getElementById('weight').value;
-            var bmi = w / (h /100 * h /100);
-            var total = bmi.toFixed(2);
-            document.getElementById('result').innerHTML = "Your BMI is " + total;
+            if (h && w) {
+                var bmi = w / (h / 100 * h / 100);
+                var total = bmi.toFixed(2);
+                var message;
+                if (total < 18.5) {
+                    message = "You are under-weight.";
+                } else if (total >= 18.5 && total <= 24.9) {
+                    message = "You are normal.";
+                } else {
+                    message = "You are over-weight.";
+                }
+
+                var diff = 0;
+                if (message !== "You are normal.") {
+                    var targetBmi;
+                    if (message === "You are under-weight.") {
+                        targetBmi = 18.5;
+                    } else if (message === "You are over-weight.") {
+                        targetBmi = 24.9;
+                    }
+                    var targetW = targetBmi * (h / 100 * h / 100);
+                    diff = targetW - w;
+                }
+
+                var resultText = "Your BMI is " + total + "<br>" + message + "<br>";
+                if (diff > 0) {
+                    resultText += "You need to gain minimum " + diff.toFixed(2) + " kg to reach a normal BMI.";
+                } else if (diff < 0) {
+                    resultText += "You need to lose minimum " + (-diff).toFixed(2) + " kg to reach a normal BMI.";
+                } else {
+                    resultText += "You are already at a normal weight for your height.";
+                }
+
+                document.getElementById('result').innerHTML = resultText;
+            } else {
+                document.getElementById('result').innerHTML = "Enter your height and weight first.";
+            }
         }
-    </script> 
+    </script>
+
+
     <footer class="footer">
-        <p class="copyright aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">© <span class="year">2023</span>  -  Raza<span class="bold"> Fitness</span></p>
+
+
+        <div class="wrapper">
+
+            <div class="icon facebook">
+                <span><i class="ri-facebook-fill"></i></span>
+            </div>
+
+            <div class="icon instagram">
+                <span><i class="ri-instagram-line"></i></span>
+            </div>
+
+            <div class="icon twitter">
+                <span><i class="ri-twitter-fill"></i></span>
+            </div>
+
+            <div class="icon whatsapp">
+                <span><i class="ri-whatsapp-line"></i></span>
+            </div>
+
+            <div class="icon youtube">
+                <span><i class="ri-youtube-fill"></i></span>
+            </div>
+        </div>
     </footer>
 </body>
+
 </html>
